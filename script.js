@@ -86,28 +86,56 @@
     });
   });
 
-  /* ---------- contact form ---------- */
+  /* ---------- contact form (Formspree) ---------- */
   const form = document.getElementById('contactForm');
   const errorEl = document.getElementById('formError');
   const successBox = document.getElementById('successBox');
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('f-name').value.trim();
       const email = document.getElementById('f-email').value.trim();
       const message = document.getElementById('f-message').value.trim();
 
       if (!name || !email || !message) {
+        errorEl.textContent = 'Please fill name, email, and message.';
         errorEl.classList.remove('hidden');
         return;
       }
       errorEl.classList.add('hidden');
-      form.classList.add('hidden');
-      successBox.classList.remove('hidden');
-      // NOTE: this is a static site — wire this up to a form backend
-      // (e.g. Formspree, Netlify Forms) or your own endpoint to actually
-      // receive submissions.
+
+      const submitBtn = form.querySelector('.submit-btn');
+      const originalBtnText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.reset();
+          form.classList.add('hidden');
+          successBox.classList.remove('hidden');
+        } else {
+          errorEl.textContent = 'Something went wrong sending your message. Please try again or email me directly.';
+          errorEl.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorEl.textContent = 'Network error — please check your connection and try again.';
+        errorEl.classList.remove('hidden');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
     });
   }
 })();
