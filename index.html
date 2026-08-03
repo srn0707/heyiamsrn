@@ -238,7 +238,7 @@
           <div class="eyebrow"><span class="rule"></span><span>Curriculum Vitae</span></div>
           <h2>Academic<br /><em>Profile</em></h2>
         </div>
-        <a href="Shreeyan_Rijal_CV.pdf" download class="dl-btn">↓ Download CV</a>
+        <a href="Shreeyan_Rijal_CV.docx" download class="dl-btn">↓ Download CV</a>
       </div>
 
       <div class="tabs reveal" id="tabs" role="tablist">
@@ -416,24 +416,24 @@
       </div>
 
       <div class="reveal">
-        <form id="contactForm" novalidate>
+        <form id="contactForm" action="https://formspree.io/f/xzdnnenz" method="POST" novalidate>
           <div class="field-row">
             <div class="field">
               <label for="f-name">Name *</label>
-              <input type="text" id="f-name" placeholder="Your full name" />
+              <input type="text" id="f-name" name="name" placeholder="Your full name" required />
             </div>
             <div class="field">
               <label for="f-email">Email *</label>
-              <input type="email" id="f-email" placeholder="your@email.com" />
+              <input type="email" id="f-email" name="email" placeholder="your@email.com" required />
             </div>
           </div>
           <div class="field">
             <label for="f-subject">Subject</label>
-            <input type="text" id="f-subject" placeholder="Collaboration, research inquiry, etc." />
+            <input type="text" id="f-subject" name="subject" placeholder="Collaboration, research inquiry, etc." />
           </div>
           <div class="field" style="margin-bottom:20px;">
             <label for="f-message">Message *</label>
-            <textarea id="f-message" rows="6" placeholder="Your message..."></textarea>
+            <textarea id="f-message" name="message" rows="6" placeholder="Your message..." required></textarea>
           </div>
           <p class="form-error hidden" id="formError">Please fill name, email, and message.</p>
           <button type="submit" class="submit-btn">Send Message →</button>
