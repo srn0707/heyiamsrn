@@ -238,7 +238,10 @@
           <div class="eyebrow"><span class="rule"></span><span>Curriculum Vitae</span></div>
           <h2>Academic<br /><em>Profile</em></h2>
         </div>
-        <a href="Shreeyan_Rijal_CV.pdf" download class="dl-btn">↓ Download CV</a>
+        <div class="cv-btn-row">
+          <button type="button" class="dl-btn" id="viewCvBtn">↗ View CV</button>
+          <a href="Shreeyan_Rijal_CV.pdf" download class="dl-btn dl-btn-outline">↓ Download CV</a>
+        </div>
       </div>
 
       <div class="tabs reveal" id="tabs" role="tablist">
@@ -351,7 +354,8 @@
 
   <!-- ===================== BTS / RESEARCH GALLERY =====================
        Static grid of photos — add/remove <figure> blocks freely, any number works.
-       To swap a photo: change the src path or drop a new file with the same name in /images. -->
+       To swap a photo: change the src path or drop a new file with the same name in /images.
+       Click any image to open it fullscreen. -->
   <section id="gallery" class="section-alt">
     <div class="wrap">
       <div class="section-head reveal">
@@ -364,28 +368,28 @@
         </p>
       </div>
 
-      <div class="gallery-grid reveal">
-        <figure>
+      <div class="gallery-grid reveal" id="galleryGrid">
+        <figure data-lightbox>
           <img src="perovskite.jpeg" alt="Research photo 2" />
           <figcaption>Perovskite Solar Cell Presentation</figcaption>
         </figure>
-        <figure>
+        <figure data-lightbox>
           <img src="telescope.jpeg" alt="Research photo 1" />
           <figcaption>Field Visit to the B.P. Koirala Observatory</figcaption>
         </figure>
-        <figure>
+        <figure data-lightbox>
           <img src="painting.jpeg" alt="Research photo 5" />
           <figcaption>Off the Clock: Painting</figcaption>
         </figure>
-        <figure>
+        <figure data-lightbox>
           <img src="award.jpeg" alt="Research photo 3" />
           <figcaption>Receiving the official college badge at orientation</figcaption>
         </figure>
-        <figure>
+        <figure data-lightbox>
           <img src="thoronglapass.jpeg" alt="Research photo 4" />
           <figcaption>Summiting Thorong La Pass (5,416 m)</figcaption>
         </figure>
-        <figure>
+        <figure data-lightbox>
           <img src="stage.jpeg" alt="Research photo 6" />
           <figcaption>Music and Celebration: Dashain–Tihar Program</figcaption>
         </figure>
@@ -449,6 +453,29 @@
   </section>
 
 </main>
+
+<!-- ===================== IMAGE LIGHTBOX (fullscreen viewer) ===================== -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">›</button>
+  <figure class="lightbox-figure">
+    <img src="" alt="" id="lightboxImg" />
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+</div>
+
+<!-- ===================== CV VIEWER MODAL ===================== -->
+<div class="cv-modal" id="cvModal" aria-hidden="true">
+  <div class="cv-modal-bar">
+    <span>Shreeyan Rijal — CV</span>
+    <div class="cv-modal-actions">
+      <a href="Shreeyan_Rijal_CV.pdf" download class="cv-modal-dl">↓ Download</a>
+      <button class="cv-modal-close" id="cvModalClose" aria-label="Close">×</button>
+    </div>
+  </div>
+  <iframe id="cvModalFrame" src="" title="Shreeyan Rijal CV"></iframe>
+</div>
 
 <footer>
   <div class="footer-marquee">
