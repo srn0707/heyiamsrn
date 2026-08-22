@@ -429,8 +429,8 @@ section{ padding:104px 0; }
 .award-row .org{ font-family:var(--font-mono); font-size:10.5px; color:var(--paper-faint); text-align:right; }
 
 /* ============ CONTACT ============ */
-.contact-grid{ display:grid; gap:72px; }
-@media(min-width:960px){ .contact-grid{ grid-template-columns:5fr 7fr; } }
+.contact-grid{ display:grid; gap:64px; }
+@media(min-width:960px){ .contact-grid{ grid-template-columns:1fr 1fr; gap:96px; } }
 .contact-info p.lede{
   font-family:var(--font-display); font-style:italic; font-weight:400; font-size:1.08rem;
   line-height:1.6; color:rgba(244,239,226,0.62); letter-spacing:-0.01em; margin:26px 0 44px; max-width:440px;
