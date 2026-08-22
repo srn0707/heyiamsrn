@@ -16,8 +16,15 @@
       <a href="#about" data-section="about">About</a>
       <a href="#research" data-section="research">Research</a>
       <a href="#gallery" data-section="gallery">Gallery</a>
-      <a href="#cv" data-section="cv">CV</a>
-      <a href="#contact" data-section="contact">Contact</a>
+      <div class="nav-cv-wrap" id="cvWrap">
+        <button class="nav-cv-btn" id="cvDropdownBtn" data-section="cv" aria-haspopup="true" aria-expanded="false">
+          CV <span class="caret">⌄</span>
+        </button>
+        <div class="nav-cv-dropdown" id="cvDropdown" role="menu">
+          <a href="#cv" role="menuitem">View CV</a>
+          <a href="Shreeyan_Rijal_CV.docx" download role="menuitem">Download CV</a>
+        </div>
+      </div>
     </div>
     <a href="#contact" class="nav-cta">Get in touch →</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
@@ -30,7 +37,8 @@
   <a href="#about">About</a>
   <a href="#research">Research</a>
   <a href="#gallery">Gallery</a>
-  <a href="#cv">CV</a>
+  <a href="#cv">View CV</a>
+  <a href="Shreeyan_Rijal_CV.docx" download>Download CV</a>
   <a href="#contact">Contact</a>
 </div>
 
@@ -138,11 +146,7 @@
             <span class="g-free">Three fields, one instinct: model first, explain second.</span>
           </div>
         </div>
-        <p class="desc">
-          Four peer-reviewed papers — including a first solo-authored work — spanning energy
-          materials, space weather physics, condensed matter theory, and 2D heterostructures,
-          with five more manuscripts under review or in progress (see the CV section below).
-        </p>
+        <p class="desc"><span class="desc-lead">Four peer-reviewed papers</span> — including a first solo-authored work — spanning energy materials, space weather physics, condensed matter theory, and 2D heterostructures, with five more manuscripts currently under review or in progress.</p>
       </div>
 
       <div class="papers reveal">
@@ -273,7 +277,6 @@
           <div class="eyebrow"><span class="rule"></span><span>Curriculum Vitae</span></div>
           <h2>Academic<br /><em>Profile</em></h2>
         </div>
-        <a href="Shreeyan_Rijal_CV.docx" download class="dl-btn">↓ Download CV</a>
       </div>
 
       <div class="tabs reveal" id="tabs" role="tablist">
@@ -393,9 +396,7 @@
           <div class="eyebrow"><span class="rule"></span><span>Behind the Research</span></div>
           <h2>In the<br /><em>Field &amp; Lab</em></h2>
         </div>
-        <p class="desc">
-          Fieldwork, conferences, and the odd 5,400-metre pass — life around the research.
-        </p>
+        <p class="desc"><span class="desc-lead">Fieldwork, conferences, and the odd 5,400-metre pass</span> — life around the research.</p>
       </div>
 
       <div class="gallery-grid reveal">
