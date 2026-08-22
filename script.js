@@ -25,7 +25,7 @@
   }
 
   /* ---------- active nav link on scroll ---------- */
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const navLinks = document.querySelectorAll('.nav-links a, .nav-links .nav-cv-btn');
   const sections = Array.from(navLinks)
     .map((l) => document.getElementById(l.dataset.section))
     .filter(Boolean);
@@ -108,6 +108,143 @@
       // NOTE: this is a static site — wire this up to a form backend
       // (e.g. Formspree, Netlify Forms) or your own endpoint to actually
       // receive submissions.
+    });
+  }
+  /* ---------- CV nav dropdown (View / Download) ---------- */
+  const cvWrap = document.getElementById('cvWrap');
+  const cvBtn = document.getElementById('cvDropdownBtn');
+  if (cvWrap && cvBtn) {
+    const closeCvDropdown = () => {
+      cvWrap.classList.remove('open');
+      cvBtn.setAttribute('aria-expanded', 'false');
+    };
+    cvBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !cvWrap.classList.contains('open');
+      cvWrap.classList.toggle('open', willOpen);
+      cvBtn.setAttribute('aria-expanded', String(willOpen));
+    });
+    document.addEventListener('click', (e) => {
+      if (!cvWrap.contains(e.target)) closeCvDropdown();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCvDropdown();
+    });
+    cvWrap.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeCvDropdown));
+  }
+
+  /* ---------- gallery lightbox (FLIP expand) ---------- */
+  const galleryFigures = document.querySelectorAll('.gallery-grid figure');
+  if (galleryFigures.length) {
+    let activeLightbox = null;
+
+    const openLightbox = (figure) => {
+      if (activeLightbox) return;
+      const img = figure.querySelector('img');
+      const captionText = figure.querySelector('figcaption')?.textContent || '';
+      const startRect = img.getBoundingClientRect();
+
+      const backdrop = document.createElement('div');
+      backdrop.className = 'lightbox-backdrop';
+
+      const frame = document.createElement('div');
+      frame.className = 'lightbox-frame';
+      frame.style.top = `${startRect.top}px`;
+      frame.style.left = `${startRect.left}px`;
+      frame.style.width = `${startRect.width}px`;
+      frame.style.height = `${startRect.height}px`;
+
+      const cloneImg = document.createElement('img');
+      cloneImg.src = img.src;
+      cloneImg.alt = img.alt;
+      frame.appendChild(cloneImg);
+
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'lightbox-close';
+      closeBtn.setAttribute('aria-label', 'Close');
+      closeBtn.textContent = '×';
+
+      const caption = document.createElement('div');
+      caption.className = 'lightbox-caption';
+      caption.textContent = captionText;
+
+      document.body.appendChild(backdrop);
+      document.body.appendChild(frame);
+      document.body.appendChild(closeBtn);
+      document.body.appendChild(caption);
+      document.body.classList.add('lightbox-open');
+
+      const naturalRatio = (img.naturalWidth || 4) / (img.naturalHeight || 3);
+      let targetW = Math.min(window.innerWidth * 0.88, 1200);
+      let targetH = targetW / naturalRatio;
+      const maxH = window.innerHeight * 0.82;
+      if (targetH > maxH) {
+        targetH = maxH;
+        targetW = targetH * naturalRatio;
+      }
+      const targetTop = (window.innerHeight - targetH) / 2;
+      const targetLeft = (window.innerWidth - targetW) / 2;
+
+      // force layout before animating so the transition starts from startRect
+      // eslint-disable-next-line no-unused-expressions
+      frame.getBoundingClientRect();
+
+      requestAnimationFrame(() => {
+        backdrop.classList.add('open');
+        if (!reduceMotion) {
+          frame.style.top = `${targetTop}px`;
+          frame.style.left = `${targetLeft}px`;
+          frame.style.width = `${targetW}px`;
+          frame.style.height = `${targetH}px`;
+        } else {
+          frame.style.transition = 'none';
+          frame.style.top = `${targetTop}px`;
+          frame.style.left = `${targetLeft}px`;
+          frame.style.width = `${targetW}px`;
+          frame.style.height = `${targetH}px`;
+        }
+        closeBtn.classList.add('show');
+        if (captionText) caption.classList.add('show');
+      });
+
+      const closeLightbox = () => {
+        frame.style.top = `${startRect.top}px`;
+        frame.style.left = `${startRect.left}px`;
+        frame.style.width = `${startRect.width}px`;
+        frame.style.height = `${startRect.height}px`;
+        backdrop.classList.remove('open');
+        closeBtn.classList.remove('show');
+        caption.classList.remove('show');
+
+        const cleanup = () => {
+          backdrop.remove();
+          frame.remove();
+          closeBtn.remove();
+          caption.remove();
+          document.body.classList.remove('lightbox-open');
+          document.removeEventListener('keydown', onKeydown);
+          activeLightbox = null;
+        };
+        if (reduceMotion) {
+          cleanup();
+        } else {
+          frame.addEventListener('transitionend', cleanup, { once: true });
+        }
+      };
+
+      const onKeydown = (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      };
+
+      backdrop.addEventListener('click', closeLightbox);
+      closeBtn.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', onKeydown);
+
+      activeLightbox = { closeLightbox };
+    };
+
+    galleryFigures.forEach((figure) => {
+      figure.addEventListener('click', () => openLightbox(figure));
     });
   }
 })();
