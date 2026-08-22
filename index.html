@@ -28,24 +28,22 @@
 </header>
 
 <div class="cv-modal-backdrop" id="cvModalBackdrop"></div>
-<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-label="CV options">
-  <a href="Shreeyan_Rijal_CV.pdf" target="_blank" rel="noopener" class="cv-modal-option" id="cvViewOption">
-    <span class="cv-modal-icon">⌕</span>
-    <span class="cv-modal-label">View CV</span>
-  </a>
-  <div class="cv-modal-divider"></div>
-  <a href="Shreeyan_Rijal_CV.pdf" download class="cv-modal-option">
-    <span class="cv-modal-icon">↓</span>
-    <span class="cv-modal-label">Download CV</span>
-  </a>
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-label="Curriculum vitae">
+  <div class="cv-modal-header">
+    <span class="cv-modal-title">Curriculum Vitae</span>
+    <div class="cv-modal-actions">
+      <a href="Shreeyan_Rijal_CV.pdf" download class="cv-modal-download">↓ Download</a>
+      <button class="cv-modal-close" id="cvModalClose" aria-label="Close">×</button>
+    </div>
+  </div>
+  <iframe class="cv-modal-frame" id="cvModalFrame" title="Shreeyan Rijal — Curriculum Vitae" loading="lazy"></iframe>
 </div>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
   <a href="#research">Research</a>
   <a href="#gallery">Gallery</a>
-  <a href="Shreeyan_Rijal_CV.pdf" target="_blank" rel="noopener">View CV</a>
-  <a href="Shreeyan_Rijal_CV.pdf" download>Download CV</a>
+  <button class="mobile-cv-btn" id="mobileCvBtn">CV</button>
   <a href="#contact">Contact</a>
 </div>
 
