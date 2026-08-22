@@ -110,53 +110,7 @@
       // receive submissions.
     });
   }
-  /* ---------- CV modal (embedded viewer + download) ---------- */
-  const cvBtn = document.getElementById('cvDropdownBtn');
-  const mobileCvBtn = document.getElementById('mobileCvBtn');
-  const cvBackdrop = document.getElementById('cvModalBackdrop');
-  const cvModal = document.getElementById('cvModal');
-  const cvModalClose = document.getElementById('cvModalClose');
-  const cvModalFrame = document.getElementById('cvModalFrame');
-  const CV_PDF_SRC = 'Shreeyan_Rijal_CV.pdf';
 
-  if (cvBackdrop && cvModal && cvModalFrame) {
-    const closeCvModal = () => {
-      cvBackdrop.classList.remove('open');
-      cvModal.classList.remove('open');
-      if (cvBtn) {
-        cvBtn.classList.remove('active');
-        cvBtn.setAttribute('aria-expanded', 'false');
-      }
-    };
-    const openCvModal = () => {
-      if (!cvModalFrame.src) cvModalFrame.src = CV_PDF_SRC;
-      cvBackdrop.classList.add('open');
-      cvModal.classList.add('open');
-      if (cvBtn) {
-        cvBtn.classList.add('active');
-        cvBtn.setAttribute('aria-expanded', 'true');
-      }
-    };
-    if (cvBtn) {
-      cvBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (cvModal.classList.contains('open')) closeCvModal();
-        else openCvModal();
-      });
-    }
-    if (mobileCvBtn) {
-      mobileCvBtn.addEventListener('click', () => {
-        mobileMenu?.classList.remove('open');
-        navToggle?.setAttribute('aria-expanded', 'false');
-        openCvModal();
-      });
-    }
-    cvBackdrop.addEventListener('click', closeCvModal);
-    if (cvModalClose) cvModalClose.addEventListener('click', closeCvModal);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeCvModal();
-    });
-  }
 
   /* ---------- gallery lightbox (FLIP expand) ---------- */
   const galleryFigures = document.querySelectorAll('.gallery-grid figure');
