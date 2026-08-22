@@ -122,10 +122,8 @@ header.site-nav{
   font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--paper-faint);
   transition:color .2s;
 }
-.nav-cv-btn .caret{ font-size:12px; transition:transform .25s cubic-bezier(.16,1,.3,1); position:relative; top:-1px; }
 .nav-cv-btn:hover{ color:var(--paper); }
 .nav-cv-btn.active{ color:var(--gold); }
-.nav-cv-btn.active .caret{ transform:rotate(180deg); }
 
 /* CV modal — a light backdrop blur with two symmetrical options, View / Download */
 .cv-modal-backdrop{
@@ -147,8 +145,8 @@ header.site-nav{
   transition:opacity .32s ease, transform .32s cubic-bezier(.16,1,.3,1), visibility 0s;
 }
 .cv-modal-option{
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
-  width:190px; padding:44px 20px; text-align:center; transition:background .25s ease, color .25s ease;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  width:210px; padding:48px 22px; text-align:center; transition:background .25s ease, color .25s ease;
 }
 .cv-modal-option:hover{ background:rgba(207,154,62,0.07); }
 .cv-modal-icon{
@@ -157,7 +155,8 @@ header.site-nav{
 }
 .cv-modal-option:hover .cv-modal-icon{ border-color:var(--gold); background:rgba(207,154,62,0.1); }
 .cv-modal-label{
-  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper-dim);
+  font-family:var(--font-display); font-style:italic; font-weight:500; font-size:1.15rem;
+  letter-spacing:-0.01em; text-transform:none; color:var(--paper-dim);
 }
 .cv-modal-option:hover .cv-modal-label{ color:var(--paper); }
 .cv-modal-divider{ width:1px; background:var(--rule); }
