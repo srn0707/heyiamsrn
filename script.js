@@ -110,27 +110,33 @@
       // receive submissions.
     });
   }
-  /* ---------- CV nav dropdown (View / Download) ---------- */
-  const cvWrap = document.getElementById('cvWrap');
+  /* ---------- CV modal (View / Download) ---------- */
   const cvBtn = document.getElementById('cvDropdownBtn');
-  if (cvWrap && cvBtn) {
-    const closeCvDropdown = () => {
-      cvWrap.classList.remove('open');
+  const cvBackdrop = document.getElementById('cvModalBackdrop');
+  const cvModal = document.getElementById('cvModal');
+  if (cvBtn && cvBackdrop && cvModal) {
+    const closeCvModal = () => {
+      cvBackdrop.classList.remove('open');
+      cvModal.classList.remove('open');
+      cvBtn.classList.remove('active');
       cvBtn.setAttribute('aria-expanded', 'false');
+    };
+    const openCvModal = () => {
+      cvBackdrop.classList.add('open');
+      cvModal.classList.add('open');
+      cvBtn.classList.add('active');
+      cvBtn.setAttribute('aria-expanded', 'true');
     };
     cvBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const willOpen = !cvWrap.classList.contains('open');
-      cvWrap.classList.toggle('open', willOpen);
-      cvBtn.setAttribute('aria-expanded', String(willOpen));
+      if (cvModal.classList.contains('open')) closeCvModal();
+      else openCvModal();
     });
-    document.addEventListener('click', (e) => {
-      if (!cvWrap.contains(e.target)) closeCvDropdown();
-    });
+    cvBackdrop.addEventListener('click', closeCvModal);
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeCvDropdown();
+      if (e.key === 'Escape') closeCvModal();
     });
-    cvWrap.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeCvDropdown));
+    cvModal.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeCvModal));
   }
 
   /* ---------- gallery lightbox (FLIP expand) ---------- */
