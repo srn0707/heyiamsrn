@@ -16,15 +16,9 @@
       <a href="#about" data-section="about">About</a>
       <a href="#research" data-section="research">Research</a>
       <a href="#gallery" data-section="gallery">Gallery</a>
-      <div class="nav-cv-wrap" id="cvWrap">
-        <button class="nav-cv-btn" id="cvDropdownBtn" data-section="cv" aria-haspopup="true" aria-expanded="false">
-          CV <span class="caret">⌄</span>
-        </button>
-        <div class="nav-cv-dropdown" id="cvDropdown" role="menu">
-          <a href="#cv" role="menuitem">View CV</a>
-          <a href="Shreeyan_Rijal_CV.docx" download role="menuitem">Download CV</a>
-        </div>
-      </div>
+      <button class="nav-cv-btn" id="cvDropdownBtn" data-section="cv" aria-haspopup="dialog" aria-expanded="false">
+        CV <span class="caret">⌄</span>
+      </button>
     </div>
     <a href="#contact" class="nav-cta">Get in touch →</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
@@ -32,6 +26,19 @@
     </button>
   </nav>
 </header>
+
+<div class="cv-modal-backdrop" id="cvModalBackdrop"></div>
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-label="CV options">
+  <a href="#cv" class="cv-modal-option" id="cvViewOption">
+    <span class="cv-modal-icon">⌕</span>
+    <span class="cv-modal-label">View CV</span>
+  </a>
+  <div class="cv-modal-divider"></div>
+  <a href="Shreeyan_Rijal_CV.docx" download class="cv-modal-option">
+    <span class="cv-modal-icon">↓</span>
+    <span class="cv-modal-label">Download CV</span>
+  </a>
+</div>
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
@@ -185,7 +192,7 @@
               <span class="idx">02</span>
               <div>
                 <span class="venue">Advances in Space Research</span>
-                <div class="year">2026 · In Press</div>
+                <div class="year">2026</div>
               </div>
             </div>
             <div class="paper-main">
@@ -377,7 +384,6 @@
         <div class="tab-panel" id="panel-awards">
           <div class="award-row"><span class="yr">Under Review</span><span class="title">Near-Metallicity, Spin-Polarized Transport &amp; Infrared Optical Response in Mn-Doped Silicon</span><span class="org">Physica B: Condensed Matter</span></div>
           <div class="award-row"><span class="yr">Under Review</span><span class="title">Nonlinear Ionosphere–Thermosphere Scaling Across G1–G5 Geomagnetic Storms (Solar Cycle 25)</span><span class="org">Space Weather · Lead Author</span></div>
-          <div class="award-row"><span class="yr">Submitted</span><span class="title">Time–Frequency Characterization of Prompt Penetration Electric Fields</span><span class="org">Lead Author</span></div>
           <div class="award-row"><span class="yr">Under Review</span><span class="title">Double Perovskite Energy Materials Study</span><span class="org">Advanced Energy Materials · 2nd Author</span></div>
           <div class="award-row"><span class="yr">Under Review</span><span class="title">PM2.5 Divergence Across Asian Capitals: Drivers, ML Forecasting &amp; Governance</span><span class="org">Atmospheric Pollution Research · Lead Author</span></div>
           <div class="award-row" style="border-bottom:none;"><span class="yr">In Progress</span><span class="title">Strain-Engineered vdW Heterostructures (Hf₂CO₂ &amp; Zr₂CO₂ / Blue Phosphorus) + 3 More</span><span class="org">Lead / Co-Author, Multiple Manuscripts</span></div>
