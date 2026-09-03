@@ -35,7 +35,7 @@ html{ scroll-behavior:smooth; }
 body{
   margin:0;
   background-color:var(--ink);
-  background-image:radial-gradient(rgba(244,239,226,0.05) 1px, transparent 1px);
+  background-image:radial-gradient(rgba(244,239,226,0.1) 1.3px, transparent 1.3px);
   background-size:24px 24px;
   background-position:-12px -12px;
   color:var(--paper);
@@ -145,7 +145,10 @@ header.site-nav{
   padding-top:58px;
 }
 .hero-bg{ position:absolute; inset:0; z-index:0; background:var(--ink); }
-.hero-bg img{ width:100%; height:100%; object-fit:cover; opacity:0.08; }
+.hero-bg::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 45% at 72% 18%, rgba(207,154,62,0.09), transparent 70%);
+}
 .hero-bg::after{
   content:''; position:absolute; inset:0;
   background:linear-gradient(180deg, rgba(22,21,27,0) 40%, var(--ink) 100%);
@@ -287,7 +290,7 @@ body.lightbox-open{ overflow:hidden; }
 section{ padding:104px 0; }
 .section-alt{
   background-color:var(--ink-raised);
-  background-image:radial-gradient(rgba(244,239,226,0.06) 1px, transparent 1px);
+  background-image:radial-gradient(rgba(244,239,226,0.12) 1.3px, transparent 1.3px);
   background-size:24px 24px;
   background-position:-12px -12px;
 }
