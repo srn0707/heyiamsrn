@@ -86,32 +86,6 @@
     });
   });
 
-  /* ---------- contact form ---------- */
-  const form = document.getElementById('contactForm');
-  const errorEl = document.getElementById('formError');
-  const successBox = document.getElementById('successBox');
-
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('f-name').value.trim();
-      const email = document.getElementById('f-email').value.trim();
-      const message = document.getElementById('f-message').value.trim();
-
-      if (!name || !email || !message) {
-        errorEl.classList.remove('hidden');
-        return;
-      }
-      errorEl.classList.add('hidden');
-      form.classList.add('hidden');
-      successBox.classList.remove('hidden');
-      // NOTE: this is a static site — wire this up to a form backend
-      // (e.g. Formspree, Netlify Forms) or your own endpoint to actually
-      // receive submissions.
-    });
-  }
-
-
   /* ---------- gallery lightbox (FLIP expand) ---------- */
   const galleryFigures = document.querySelectorAll('.gallery-grid figure');
   if (galleryFigures.length) {
@@ -224,6 +198,67 @@
 
     galleryFigures.forEach((figure) => {
       figure.addEventListener('click', () => openLightbox(figure));
+    });
+  }
+
+  /* ---------- contact form (submits to Formspree) ---------- */
+  const form = document.getElementById('contactForm');
+  const errorEl = document.getElementById('formError');
+  const successBox = document.getElementById('successBox');
+
+  if (form) {
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalBtnLabel = submitBtn ? submitBtn.textContent : '';
+
+    const showError = (message) => {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('f-name').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const message = document.getElementById('f-message').value.trim();
+
+      if (!name || !email || !message) {
+        showError('Please fill name, email, and message.');
+        return;
+      }
+      errorEl.classList.add('hidden');
+
+      if (form.action.includes('YOUR_FORM_ID')) {
+        showError('Form isn’t connected yet — add your Formspree form ID in index.html.');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.classList.add('hidden');
+          successBox.classList.remove('hidden');
+        } else {
+          showError('Something went wrong sending that — please email me directly at shreeyanrijal7@gmail.com.');
+        }
+      } catch (err) {
+        showError('Couldn’t reach the server — please email me directly at shreeyanrijal7@gmail.com.');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnLabel;
+        }
+      }
     });
   }
 })();
