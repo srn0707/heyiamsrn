@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Shreeyan Rijal — Computational &amp; Materials Physicist</title>
 <meta name="description" content="Shreeyan Rijal — computational and materials physicist working on first-principles DFT of van der Waals heterostructures and doped semiconductors, space weather and ionospheric physics, and atmospheric science. St. Xavier's College, Kathmandu." />
+<meta name="theme-color" content="#16151b" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Shreeyan Rijal — Computational & Materials Physicist" />
+<meta property="og:description" content="Computational and materials physicist working on first-principles DFT of van der Waals heterostructures and doped semiconductors, space weather and ionospheric physics, and atmospheric science." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2316151b'/%3E%3Ctext x='32' y='43' font-family='Georgia, serif' font-size='26' font-weight='600' fill='%23cf9a3e' text-anchor='middle'%3ESR%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -39,19 +47,18 @@
   <section class="hero" id="about">
     <div class="hero-bg"></div>
 
-
     <div class="wrap hero-body">
       <div class="hero-grid">
         <div>
-          <div class="eyebrow"><span class="rule"></span><span>B.Sc. Physics · Batch of 2021</span></div>
+          <div class="eyebrow hero-in" style="animation-delay:.05s;"><span class="rule"></span><span>B.Sc. Physics · Batch of 2021</span></div>
 
-          <h1>Shreeyan<br /><em>Rijal</em></h1>
+          <h1 class="hero-in" style="animation-delay:.12s;">Shreeyan<br /><em>Rijal</em></h1>
 
-          <div class="gloss" aria-hidden="true">
+          <div class="gloss hero-in" aria-hidden="true" style="animation-delay:.22s;">
             <span class="g-free">Final-year physicist. First-principles modeller. Occasional mountaineer.</span>
           </div>
 
-          <p class="lede" style="margin-top:26px;">
+          <p class="lede hero-in" style="margin-top:26px; animation-delay:.3s;">
             <span class="desc-lead">I model matter at the atomic scale</span> — using density functional theory to understand
             how van der Waals heterostructures and doped semiconductors behave under real-world
             conditions. My work also reaches into space weather and the upper atmosphere, where
@@ -59,13 +66,13 @@
             student at St. Xavier's College, Tribhuvan University.
           </p>
 
-          <div class="btn-row">
+          <div class="btn-row hero-in" style="animation-delay:.38s;">
             <a href="#contact" class="btn btn-solid">Open to collaboration <span class="arrow">→</span></a>
             <a href="#research" class="btn btn-outline">See my research</a>
           </div>
         </div>
 
-        <div class="field-card">
+        <div class="field-card hero-in" style="animation-delay:.2s;">
           <div class="photo-wrap">
             <!-- MAIN HERO PHOTO — replace photo.jpg in this folder with your new image
                  (keep the same filename) or change the src path below to point to a new file -->
@@ -112,7 +119,7 @@
       <img src="chandragiri.jpeg" alt="Research behind-the-scenes photo 6" />
       <img src="suryachaur.jpeg" alt="Research behind-the-scenes photo 7" />
 
-      
+
       <!-- ===== SECOND HALF — duplicate of the above, keep in sync for a seamless loop ===== -->
       <img src="stage.jpeg" alt="" aria-hidden="true" />
       <img src="award.jpeg" alt="" aria-hidden="true" />
@@ -380,27 +387,27 @@
 
       <div class="gallery-grid reveal">
         <figure>
-          <img src="perovskite.jpeg" alt="Research photo 2" />
+          <img src="perovskite.jpeg" alt="Research photo 2" loading="lazy" />
           <figcaption>Perovskite Solar Cell Presentation</figcaption>
         </figure>
         <figure>
-          <img src="telescope.jpeg" alt="Research photo 1" />
+          <img src="telescope.jpeg" alt="Research photo 1" loading="lazy" />
           <figcaption>Field Visit to the B.P. Koirala Observatory</figcaption>
         </figure>
         <figure>
-          <img src="painting.jpeg" alt="Research photo 5" />
+          <img src="painting.jpeg" alt="Research photo 5" loading="lazy" />
           <figcaption>Off the Clock: Painting</figcaption>
         </figure>
         <figure>
-          <img src="award.jpeg" alt="Research photo 3" />
+          <img src="award.jpeg" alt="Research photo 3" loading="lazy" />
           <figcaption>Receiving the official college badge at orientation</figcaption>
         </figure>
         <figure>
-          <img src="thoronglapass.jpeg" alt="Research photo 4" />
+          <img src="thoronglapass.jpeg" alt="Research photo 4" loading="lazy" />
           <figcaption>Summiting Thorong La Pass (5,416 m)</figcaption>
         </figure>
         <figure>
-          <img src="stage.jpeg" alt="Research photo 6" />
+          <img src="stage.jpeg" alt="Research photo 6" loading="lazy" />
           <figcaption>Music and Celebration: Dashain–Tihar Program</figcaption>
         </figure>
 
@@ -430,26 +437,29 @@
       </div>
 
       <div class="reveal">
-        <form id="contactForm" novalidate>
+        <!-- Replace YOUR_FORM_ID below with your real Formspree form ID
+             (create one free at https://formspree.io — takes ~2 minutes). -->
+        <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="field-row">
             <div class="field">
               <label for="f-name">Name *</label>
-              <input type="text" id="f-name" placeholder="Your full name" />
+              <input type="text" id="f-name" name="name" placeholder="Your full name" />
             </div>
             <div class="field">
               <label for="f-email">Email *</label>
-              <input type="email" id="f-email" placeholder="your@email.com" />
+              <input type="email" id="f-email" name="email" placeholder="your@email.com" />
             </div>
           </div>
           <div class="field">
             <label for="f-subject">Subject</label>
-            <input type="text" id="f-subject" placeholder="Collaboration, research inquiry, etc." />
+            <input type="text" id="f-subject" name="_subject" placeholder="Collaboration, research inquiry, etc." />
           </div>
           <div class="field" style="margin-bottom:20px;">
             <label for="f-message">Message *</label>
-            <textarea id="f-message" rows="6" placeholder="Your message..."></textarea>
+            <textarea id="f-message" name="message" rows="6" placeholder="Your message..."></textarea>
           </div>
-          <p class="form-error hidden" id="formError">Please fill name, email, and message.</p>
+          <p class="form-error hidden" id="formError" role="alert">Please fill name, email, and message.</p>
           <button type="submit" class="submit-btn">Send Message →</button>
         </form>
 
