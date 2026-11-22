@@ -11,24 +11,30 @@
   const navToggle = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   if (navToggle && mobileMenu) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
-      navToggle.classList.toggle('open', isOpen);
+    const setMenu = (open) => {
+      mobileMenu.classList.toggle('open', open);
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('menu-open', open);
+    };
+    navToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+    mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        setMenu(false);
+        navToggle.focus();
+      }
     });
-    mobileMenu.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      })
-    );
+    window.matchMedia('(min-width: 860px)').addEventListener('change', (e) => {
+      if (e.matches) setMenu(false);
+    });
   }
 
   /* ---------- active nav link on scroll ---------- */
-  const navLinks = document.querySelectorAll('.nav-links a, .nav-links .nav-cv-btn');
-  const sections = Array.from(navLinks)
-    .map((l) => document.getElementById(l.dataset.section))
-    .filter(Boolean);
+  const navLinks = document.querySelectorAll('.nav-links a');
+  // 'contact' is observed too (it has no link in the bar) so the last link un-highlights once you reach it
+  const sectionIds = Array.from(new Set([...Array.from(navLinks).map((l) => l.dataset.section), 'contact']));
+  const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
 
   if (sections.length && 'IntersectionObserver' in window) {
     const navObserver = new IntersectionObserver(
@@ -43,6 +49,40 @@
     );
     sections.forEach((s) => navObserver.observe(s));
   }
+
+  /* ---------- marquees: keep the loop full on wide screens ----------
+     Each track holds one set of items twice (second half = seamless loop).
+     On screens wider than one set, the strip ran out of content before the loop
+     restarted. Add extra copies to BOTH halves until a half is wider than the
+     screen, and scale the duration so the scroll speed stays the same. */
+  const fillMarquees = () => {
+    const targetW = Math.max(window.innerWidth, (window.screen && window.screen.width) || 0, 1280) * 1.25;
+    document.querySelectorAll('.marquee-track, .img-marquee-track').forEach((track) => {
+      const kids = Array.from(track.children);
+      if (kids.length < 2 || kids.length % 2 !== 0) return;
+      const half = kids.length / 2;
+      const unit = kids.slice(0, half);
+      const unitW = track.scrollWidth / 2;
+      if (!unitW) return;
+      const copies = Math.ceil(targetW / unitW);
+      if (copies <= 1) return;
+
+      const secondHalfStart = kids[half];
+      const clone = (node) => {
+        const c = node.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        if (c.tagName === 'IMG') c.alt = '';
+        return c;
+      };
+      for (let i = 1; i < copies; i++) unit.forEach((n) => track.insertBefore(clone(n), secondHalfStart));
+      for (let i = 1; i < copies; i++) unit.forEach((n) => track.appendChild(clone(n)));
+
+      const base = parseFloat(getComputedStyle(track).animationDuration);
+      if (base) track.style.animationDuration = `${base * copies}s`;
+    });
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fillMarquees);
+  else window.addEventListener('load', fillMarquees);
 
   /* ---------- scroll reveal ---------- */
   const revealEls = document.querySelectorAll('.reveal');
@@ -64,25 +104,53 @@
   }
 
   /* ---------- CV tabs ---------- */
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      tabButtons.forEach((b) => b.classList.toggle('active', b === btn));
-      document.querySelectorAll('.tab-panel').forEach((panel) => {
-        panel.classList.toggle('active', panel.id === `panel-${target}`);
-      });
+  const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+  const activateTab = (btn, moveFocus) => {
+    const target = btn.dataset.tab;
+    tabButtons.forEach((b) => {
+      const on = b === btn;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    document.querySelectorAll('.tab-panel').forEach((panel) => {
+      panel.classList.toggle('active', panel.id === `panel-${target}`);
+    });
+    if (moveFocus) btn.focus();
+  };
+  tabButtons.forEach((btn, i) => {
+    btn.addEventListener('click', () => activateTab(btn, false));
+    btn.addEventListener('keydown', (e) => {
+      const last = tabButtons.length - 1;
+      let next = null;
+      if (e.key === 'ArrowRight') next = i === last ? 0 : i + 1;
+      else if (e.key === 'ArrowLeft') next = i === 0 ? last : i - 1;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = last;
+      if (next !== null) {
+        e.preventDefault();
+        activateTab(tabButtons[next], true);
+      }
     });
   });
 
   /* ---------- research paper expand ---------- */
+  const setExpanded = (paper, expanded) => {
+    paper.classList.toggle('expanded', expanded);
+    const btn = paper.querySelector('.expand-btn');
+    if (btn) {
+      btn.setAttribute('aria-expanded', String(expanded));
+      btn.setAttribute('aria-label', expanded ? 'Collapse abstract' : 'Expand abstract');
+    }
+  };
   document.querySelectorAll('.paper').forEach((paper) => {
     const btn = paper.querySelector('.expand-btn');
     if (!btn) return;
+    btn.setAttribute('aria-expanded', 'false');
     btn.addEventListener('click', () => {
       const willExpand = !paper.classList.contains('expanded');
-      document.querySelectorAll('.paper.expanded').forEach((p) => p !== paper && p.classList.remove('expanded'));
-      paper.classList.toggle('expanded', willExpand);
+      document.querySelectorAll('.paper.expanded').forEach((p) => p !== paper && setExpanded(p, false));
+      setExpanded(paper, willExpand);
     });
   });
 
@@ -126,6 +194,7 @@
       document.body.appendChild(closeBtn);
       document.body.appendChild(caption);
       document.body.classList.add('lightbox-open');
+      closeBtn.focus({ preventScroll: true });
 
       const naturalRatio = (img.naturalWidth || 4) / (img.naturalHeight || 3);
       let targetW = Math.min(window.innerWidth * 0.88, 1200);
@@ -160,7 +229,10 @@
         if (captionText) caption.classList.add('show');
       });
 
+      let closing = false;
       const closeLightbox = () => {
+        if (closing) return;
+        closing = true;
         frame.style.top = `${startRect.top}px`;
         frame.style.left = `${startRect.left}px`;
         frame.style.width = `${startRect.width}px`;
@@ -169,7 +241,10 @@
         closeBtn.classList.remove('show');
         caption.classList.remove('show');
 
+        let cleaned = false;
         const cleanup = () => {
+          if (cleaned) return;
+          cleaned = true;
           backdrop.remove();
           frame.remove();
           closeBtn.remove();
@@ -177,16 +252,23 @@
           document.body.classList.remove('lightbox-open');
           document.removeEventListener('keydown', onKeydown);
           activeLightbox = null;
+          figure.focus({ preventScroll: true });
         };
         if (reduceMotion) {
           cleanup();
         } else {
           frame.addEventListener('transitionend', cleanup, { once: true });
+          setTimeout(cleanup, 800); // safety net if the transition event never fires
         }
       };
 
       const onKeydown = (e) => {
         if (e.key === 'Escape') closeLightbox();
+        // the close button is the only control in the lightbox, so keep focus on it
+        else if (e.key === 'Tab') {
+          e.preventDefault();
+          closeBtn.focus({ preventScroll: true });
+        }
       };
 
       backdrop.addEventListener('click', closeLightbox);
@@ -197,7 +279,17 @@
     };
 
     galleryFigures.forEach((figure) => {
+      const cap = figure.querySelector('figcaption')?.textContent.trim();
+      figure.setAttribute('tabindex', '0');
+      figure.setAttribute('role', 'button');
+      figure.setAttribute('aria-label', cap ? `Enlarge photo: ${cap}` : 'Enlarge photo');
       figure.addEventListener('click', () => openLightbox(figure));
+      figure.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(figure);
+        }
+      });
     });
   }
 
@@ -224,6 +316,12 @@
 
       if (!name || !email || !message) {
         showError('Please fill name, email, and message.');
+        return;
+      }
+      // Formspree rejects malformed addresses, which would surface as a vague "something went wrong".
+      // Catch it here so the visitor can fix it and the message actually reaches the inbox.
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('Please enter a valid email address so I can reply.');
         return;
       }
       errorEl.classList.add('hidden');
